@@ -326,7 +326,7 @@
 % not capitalized unless they are the first or last word of the title.
 % Linebreaks \\ can be used within to get better formatting as desired.
 % Do not put math or special symbols in the title.
-\title{Ride Hailing Supply and Demand Forecasting using Didi-Tech Dataset\\Project Proposal}
+\title{New York City Taxi Trip Supply and Demand Forecasting using TLC Trip Record Dataset\\Project Proposal}
 
 
 % author names and affiliations
@@ -390,30 +390,30 @@ Spring 2017, University of Utah}
 % creates the second title. It will be ignored for other modes.
 \IEEEpeerreviewmaketitle
 
-\section{Background \cite{DidiPage}}
+\section{Background }
 
-Very few people in China own cars and they mostly rely on ride hailing services for transportation. Didi Chuxing is the leading ride hailing company in China and processes over 11 million trips, plans over 9 billion routes and collects over 50TB of data per day. Forecasting of ride supply and demand  is critical to enabling Didi to maximize utilization of drivers and to ensure that riders can always get a car whenever and wherever they may need a ride. It also helps to predict the volume of drivers and riders at a certain time period in a specific geographic area. For instance, demand tends to surge in residential areas in the mornings and in business districts in the evenings. Supply-demand forecasting allows Didi to predict demand surges and guide drivers to those areas. The aim is to drive towards higher earnings for drivers and no surge pricing for riders.
+The New York City (NYC) Taxi and Limousine Commission (TLC) has released\cite{NyTlcPage} yellow and green taxi trip data capturing pick-up and drop-off dates/times, pick-up and drop-off locations, trip distances, itemized fares, rate types, payment types, and driver-reported passenger counts. The latest data is the one that is available for the months January through June of 2016.
 
-The Didi Research Institute organized a worldwide algorithm challenge in the year 2016 for forecasting ride supply and demand. They provided a train and test dataset and a asked teams to come up with a ride supply and demand forecasting algorithm. Algorithms submitted by the teams were evaluated based on a published metric that measured the average error in the forecast. 
 
 \section{Project Scope}
-The 2016 Didi Algorithm challenge is now over and they are planning to organize another competition soon \cite{DidiPage}. The project team will use the dataset from the 2016 competition and forecast the ride supply and demand using the regression methods that will be covered in the Data Mining 2017 Spring semester at the School of Computing in the University of Utah. The accuracy of the forecast will be evaluated using the same metric that was used in the competition. In addition to the techniques covered in class, the project team will also select two techniques that are either new or will be built on techniques covered in class with the aim of achieving a higher forecasting accuracy.
+The project team will use the TLC 2016 dataset to forecast taxi trip supply, demand and expected fare for any given date, time and location using the regression methods that will be covered in the Data Mining 2017 Spring semester at the School of Computing of the University of Utah. The accuracy of the forecast will be evaluated using a metric based on the average forecast error on a test dataset. This metric will be developed by the project team. In addition to the techniques covered in class, the project team will also select two techniques that are either new or will be built on techniques covered in class with the aim of achieving a higher forecasting accuracy. 
 
 \section{Project Team}
 Kimberly Williamson and Gopal Menon will work on the project.
 \section{Data}
-The train and test dataset will be downloaded  
+The dataset will be downloaded from NYC TLC website and will be denormalized for the purpose of the project. In addition to this, local weather and event information will also be incorporated into the forecast.
 
 \section{Why this is interesting}
 
+The reason this problem is interesting is because it will provide a way for a New York City taxi customer to be negotiate a fair price for the taxi ride and also enable the taxi cab company to predict the number of rides that will be needed and in doing so reduce wastage of resources and also provide timely rides to customers. Forecasting of demand surges and drops will enable taxi companies to efficiently distribute resources.
 
 \section{What is new}
 
 
 \begin{thebibliography}{1}
 
-\bibitem{DidiPage}
-\enquote{Algorithm Competition.} \textit{Algorithm Competition}. N.p., n.d. Web. 28 Jan. 2017.
+\bibitem{NyTlcPage}
+\enquote{NYC Taxi \& Limousine Commission - Trip Record Data.} \textit{NYC Taxi \& Limousine Commission - Trip Record Data.} N.p., n.d. Web. 28 Jan. 2017.
 \end{thebibliography}
 
 \end{document}
