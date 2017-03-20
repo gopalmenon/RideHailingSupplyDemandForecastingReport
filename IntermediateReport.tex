@@ -396,26 +396,46 @@
 Didi Chuxing is the leading ride hailing company in China and processes over 11 million trips, plans over 9 billion routes and collects over 50TB of data per day. They organized a worldwide algorithm challenge in the year 2016 \cite{DidiPage} for forecasting ride supply and demand. 
 
 \section{Project Scope}
-The project team will use the 2016 Didi algorithm competition dataset to forecast taxi trip supply, demand, and expected fare for any given date, time, and location using regression models explicated in the Data Mining 2017 Spring semester at the School of Computing of the University of Utah. The accuracy of the forecast will be evaluated using the average forecast error metric used in the competition.
+The project team will use the 2016 Didi algorithm competition dataset to forecast taxi trip supply, demand, and expected fare for any given date, time, and location using regression models explicated in the Data Mining 2017 Spring semester at the School of Computing of the University of Utah. The accuracy of the forecast will be evaluated using an average forecast error metric.
 
 \section{Current Progress}
-In order to run the regression models, the categorical values in the Didi algorithm competition dataset needed to be converted into a regression friendly format.  Depending on the type of categorical value, the new values are lists that consist of 0 values when the category was not present in an order and 1 or a respective count when the category is present in the order.
-The project team has coded the input values for the regression models.  The input values consist of:
-\begin{enumerate}
- \item An order key, comprised of the values for location, weather, traffic, and points of interests. 
- \item The cost, which is the median price of orders for a specific date and time.
- \item And the number of orders for a specific date and time.
-\end{enumerate}
-With the input values created, the project team can now experiment with multiple regression models.
 
-\section{Stochastic Gradient Descent}
-The project team has experimented with the Stochastic Gradient Descent (SGD) model of regression.  The results of the initial regression can be found below.
+\subsection{Data format conversion}
+In order to run the regression models, the categorical values in the Didi algorithm competition dataset needed to be converted into a regression friendly format. Depending on the type of categorical value, the new values are lists that consist of $0$ values when the category is not present in an order and $1$ or a count when the category is present in the order.
+
+\subsection{Data format details}
+We have converted the data into a format that can be used by the regression models. The input to the regression consists of:
+\begin{enumerate}
+ \item An order key, comprised of the categorical values for start district, destination district and order time
+ \item An order value consisting of  
+ \begin{enumerate}
+ \item Traffic and points of interest for the start and destination districts
+ \item Weather at the time of the order
+ \item The value that needs to be predicted, which is the median order price or the number of orders
+ \end{enumerate}
+\end{enumerate}
+
+With the input data created, we have started experimenting with multiple regression models.
+\subsection{Data Size}
+We have $1.3$ million rows in our training data consisting of ride hailing orders. When we took into consideration, only those orders where the start and end districts have data for traffic and places of interest, the number of training rows were reduced to $921,000$.
+\section{Approaches Tried}
+
+We started using scikit-learn \cite{sklearn}, the Python Machine Learning library, for running regressions, as it seemed to offer many regression models that can be fine tuned using hyper-parameters.
+
+\subsection{What did not work}
+
+The first scikit-learn regression model we tried was Ordinary Least Squares (OLS) regression as we wanted to see how the basic regression model would do in comparison with future models we planned to try. It was to be a sort of baseline for comparison. It did not return a result after running overnight and we realized that most scikit-learn regression models like OLS, Ridge and Lasso will only work \cite{choose} when the number of samples is less than $100,000$.  For cases where the number of samples is more than this number, the only regression model available was the one using Stochastic Gradient Descent. We used this model and gave it the entire training set. The regression did finish running, but the results were wildly inaccurate with a mean squared error of $\approx10^{35}$. We then discovered that districts in all orders did not have data for traffic and places of interest. We then removed the orders without this data, but the results were still not accurate. 
+
+\subsection{What Worked}
+We used the scikit-learn Stochastic Gradient Descent (SGD) regression model after removing weather, traffic and points of interest from the regression input. With this data format, our mean squared error dropped to $223$ from a value of $\approx10^{35}$. This was achieved with default hyper-parameters. With $5$-fold cross-validation, the error further dropped to $182$.
+
+The results of the initial regression can be found below.
     \begin{table}[!h] 
     \centering
-    \caption{Mean Squared Error}
+    \caption{Initial Regression Results}
     \begin{tabular}{|c|c|}
       \hline
-   Predictive Variable  & Mean Squared Error \\
+   Predicted Variable  & Mean Squared Error \\
       \hline      
       Number of Orders&   $\num[group-separator={,}]{182.777}$ \\
       \hline      
@@ -423,17 +443,24 @@ The project team has experimented with the Stochastic Gradient Descent (SGD) mod
       \hline
     \end{tabular}
     \end{table}
-Approximately $13.76\%$ of the values were determined to have any significance, meaning the coefficient for the value was greater than 1 or the value was less than -1, in predicting the number of orders.  The majority, $\approx 92.12\%$, of the significant values used to predict the number of orders were part of the time categories. Meaning the time of the day had the most significant impact on the number of orders.\\
-Approximately $23.90\%$ of the values were determined to have any significance, meaning the coefficient for the value was greater than 1 or the value was less than -1, in predicting the order price.  The majority, $\approx 77.55\%$, of the significant values used to predict the number of orders were part of the district categories.  Meaning the districts, both start and destination, had the most significant impact on the order price.
+For predicting number of orders, approximately $13.76\%$ of the values were determined to be significant, meaning the coefficient for the value was greater than 1 or the value was less than -1, in predicting the number of orders.  The majority, $\approx 92.12\%$, of the significant values used to predict the number of orders were part of the time categories. Meaning the time of the day had the most significant impact on the number of orders.\\
+For predicting order price, approximately $23.90\%$ of the values were determined to be significant in predicting the order price. The majority, $\approx 77.55\%$, of the significant values used to predict the number of orders were part of the district categories. Meaning the districts, both start and destination, had the most significant impact on the order price.
     
 \section{Future Work}
 
-The project team plans to experiment with other models of regression including Ridge, Lasso, and Ordinary Least Squares.  During review of the regression model output the project team may adjust the input values to reduce the Order Keys value by eliminating variables that are shown to have minimal impact. 
+We plan to experiment with other models of regression including Ridge, Lasso, and Orthogonal Matching Pursuit. Since scikit-learn cannot be used for this purpose, due to the limitation of the amount of data it can process, we will need to use other libraries or code our own solutions. During review of the regression model output the project team may adjust the input values by eliminating or adding variables that result in increased accuracy. We may also eliminate variables that have minimal impact.
 
 \begin{thebibliography}{1}
 
 \bibitem{DidiPage}
 \enquote{Algorithm Competition.} \textit{Algorithm Competition}. N.p., n.d. Web. 28 Jan. 2017.
+
+\bibitem{sklearn}
+\enquote{Scikit-learn.} \textit{Scikit-learn: Machine Learning in Python - Scikit-learn 0.18.1 Documentation.} N.p., n.d. Web. 19 Mar. 2017.
+
+\bibitem{choose}
+\enquote{Choosing the Right Estimator} \textit{Choosing the Right Estimator - Scikit-learn 0.18.1 Documentation.} N.p., n.d. Web. 19 Mar. 2017.
+
 \end{thebibliography}
 
 \end{document}
