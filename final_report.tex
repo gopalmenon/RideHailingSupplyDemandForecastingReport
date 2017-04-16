@@ -25,6 +25,8 @@
 \usepackage{graphics}
 \usepackage{graphicx}
 \usepackage{wrapfig}
+\usepackage{subfig}
+\usepackage{float}
 \usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
 \usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
 \usepackage[english]{babel} % English language/hyphenation
@@ -96,7 +98,10 @@ We have converted the data into a format that can be used by the regression mode
 \item Traffic and points of interest for the start and destination districts
 \item Weather at the time of the order
 \item The value that needs to be predicted, which is the median order price or the number of orders
-\end{itemize}\end{itemize}With the input data created, we have experimented with multiple regression models.
+\end{itemize}
+\end{itemize}
+
+With the input data created, we have experimented with multiple regression models.
 
 \subsection{Data Size}
 
@@ -178,7 +183,9 @@ The prediction accuracy results for number of rides is shown in table \ref{resul
 \label{rides2}
 \end{figure}
 
-Since we were not getting good results, we decided to see what the data looks like and plotted box and whisker plots for the data. These plots are shown in figure \ref{boxplots} and seem to suggest that there are a lot of outliers. The outliers are usually computed using the inter-quartile distance between the first and third quartiles and using that figure to include elements that are up to $1.5$ times the inter-quartile distance on either side. Elements outside these limits are marked as outliers. However it is doubtful that these are outliers since it is actual data and the reported number of outliers is large.\\
+Since we were not getting good results, we decided to see what the data looks like and plotted box and whisker plots for the data. These plots are shown in figure \ref{boxplots} and seem to suggest that there are a lot of outliers. The outliers are usually computed using the inter-quartile distance between the first and third quartiles and using that figure to include elements that are up to $1.5$ times the inter-quartile distance on either side. Elements outside these limits are marked as outliers. However it is doubtful that these are outliers since it is actual data and the reported number of outliers is large.  \\
+
+We next looked at clustering methods to determine and filter out outliers.  After experimenting with a couple of methods with no improvement in the mean squared error, we confirmed our previous theory that the identified outliers are most likely not true outliers. \\
 
 \begin{figure}[!htb]
 \centering
@@ -187,7 +194,26 @@ Since we were not getting good results, we decided to see what the data looks li
 \label{rides3}
 \end{figure}
 
-Next we plotted the number of rides and the order price for each data point after it had been projected on the first two eigen vectors and multiplied by the corresponding eigen values. These are shown in figures \ref{rides} and \ref{price}. These plots show that for the same coordinate along the first two eigen vectors, there are many values for the number of rides and price. This is an indication of the complexity of the data and the difficulty in using it to make predictions. The number of rides plot for the start district and day of week in figure \ref{rides2} also shows a similar complexity that makes prediction difficult. Figure \ref{rides3} is another example of data complexity.
+Next we plotted the number of rides and the order price for each data point after it had been projected on the first two eigen vectors and multiplied by the corresponding eigen values. These are shown in figures \ref{rides} and \ref{price}. These plots show that for the same coordinate along the first two eigen vectors, there are many values for the number of rides and price. This is an indication of the complexity of the data and the difficulty in using it to make predictions. The number of rides plot for the start district and day of week in figure \ref{rides2} also shows a similar complexity that makes prediction difficult. Figure \ref{rides3} is another example of data complexity. \\
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=3in]{figures/PeakTimeslots.png}
+\caption{Number of rides scatter plot for a timeslot (Monday-Friday).}
+\label{peak}
+\end{figure}
+
+\begin{figure}[!htb]
+\centering
+\subfloat{\includegraphics[width=3in]{figures/StartMorning.png}}
+\subfloat{\includegraphics[width=3in]{figures/EndMorning.png}}
+\caption{Number of rides scatter plot for a district during peak time period (Monday-Friday).}
+\label{peakDistrict}
+\end{figure}
+
+We also looked at patterns that could be attributed to the passengers taking taxis to and from work. Using a Monday through Friday work week, we first found the peak timeslots shown in figure \ref{peak}. Then using the peak timeslots, we plotted the number of orders per start district and the number of orders per end district for the first peak shown in figure \ref{peakDistrict}. While there does appear to be some pattern that could lead to deducing residential and commercial districts, the pattern is not strong enough to reduce the complexity of the dataset.\\
+
+The dataset can be separated into different collections, the DateTime collection, the POI collection, the Weather collection, and the Traffic collection. Each collection in the dataset has been expanded to allow for the categorization of the variables. We ran dimension reduction on each collection separately to obtain a two-dimension subspace using Singular Value Decomposition(SVD). The objective of the SVD process was to visualize the collections to determine if the collection will fit to a linear line.  These visualizations further proved that the dataset is not of a linear fit.
 
 %------------------------------------------------
 \section{Conclusion}
