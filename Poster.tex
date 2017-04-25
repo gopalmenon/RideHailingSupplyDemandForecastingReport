@@ -99,32 +99,44 @@ Didi Chuxing is the leading ride hailing company in China and processes over 11 
 
 \headerbox{Patterns In Ride Hailing Data}{name=results,column=2,span=2,row=0}{
 
-\begin{multicols}{2}
-\vspace{1em}
+\begin{multicols*}{2}
 \begin{center}
 \includegraphics[width=0.8\linewidth]{figures/NumberofRidesforDistrictandTimeSlot.png}
 \captionof{figure}{Number of rides scatter plot for start district and time slot.}
 \end{center}
 
-We also looked at patterns that could be attributed to the passengers taking taxis to and from work. Using a Monday through Friday work week, we first found the peak timeslots. Then using the peak timeslots, we plotted the number of orders per start district and the number of orders per destination district for the first peak.\\
-
-While there does appear to be some pattern that could lead to deducing residential and commercial districts, the pattern is not strong enough to reduce the complexity of the dataset.
-\end{multicols}
-
+\textbf{Commercial vs Residential}
+\begin{itemize}
+	\item Commercial - Districts where Didi Chuxing Customers Work
+	\item Residential - Districts where Didi Chuxing Customers Live
+	\item Peak Timeslots and Districts were Visible
+	\item Pattern Not Strong Enough to Reduce Complexity
+\end{itemize}
+\columnbreak
 %------------------------------------------------
-
-\begin{multicols}{2}
-\vspace{1em}
-Since we were not getting good results, we decided to look for outliers. Outliers are usually computed using the inter-quartile distance between the first and third quartiles and using that value to include elements that are up to $1.5$ times the inter-quartile distance on either side. Elements outside these limits are marked as outliers. However it was doubtful that the reported outliers were accurate since it is actual data and the reported number was large.  \\
-
-We next looked at clustering methods to determine and filter out outliers. After experimenting with a couple of methods, there was no improvement in the error. We confirmed our theory that the identified outliers are most likely not true outliers, but result of the scattered nature of the dataset. \\
+\textbf{Outliers}
+\begin{itemize}
+	\item Boxplot
+	\begin{itemize}
+		\item Computed with Inter-Quartile Distance Between the First and Third Quartiles
+		\item Included Elements that are up to $1.5$ Times the Inter-Quartile distance
+		\item Outliers Removed had Little Effect
+	\end{itemize}
+	\item Clustering
+	\begin{itemize}
+		\item Agglomerative Clustering
+		\item Sparsed Data did not Create Well-Formed Clusters
+		\item Unable to Remove Outliers
+	\end{itemize}
+\end{itemize}
+ However it was doubtful that the reported outliers were accurate since it is actual data and the reported number was large.\\
 
 \begin{center}
 \includegraphics[width=0.8\linewidth]{figures/PeakTimeslots.png}
 \captionof{figure}{Number of rides scatter plot for a timeslot (Monday-Friday).}
 \end{center}
 
-\end{multicols}
+\end{multicols*}
 }
 
 %----------------------------------------------------------------------------------------
@@ -149,10 +161,12 @@ We next looked at clustering methods to determine and filter out outliers. After
 %	CONCLUSION
 %----------------------------------------------------------------------------------------
 
-\headerbox{Conclusion}{name=conclusion,column=2,span=2,row=0,below=results,above=references}{
-
-It looks like traditional regression methods do not work for complicated situations where we need to model human behavior. Deep learning techniques have been shown to give better results where traditional methods have failed or do not result in the desired level of accuracy. This is possibly a problem that is better suited to using deep learning.
-
+\headerbox{Conclusion}{name=conclusion,column=2,span=2,row=0,below=results,above=bottom}{
+\begin{itemize}
+	\item Traditional Regression Methods Do Not Work for Complicated Situations with Human Behavior
+	\item Deep Learning Techniques Would be Better Fit to Handle this Project
+	\item Missing Geo-Location Restricted Ability to Deliver Meaningful Results
+\end{itemize}
 }
 
 %----------------------------------------------------------------------------------------
@@ -161,16 +175,32 @@ It looks like traditional regression methods do not work for complicated situati
 
 \headerbox{Ride Hailing Data}{name=method,column=0,span=2,below=objectives}{ % This block's bottom aligns with the bottom of the conclusion block
 
-In order to run the regression models, the categorical values in the Didi algorithm competition dataset needed to be converted into a regression friendly format. Depending on the type of categorical value, the new values are lists that consist of 0 values when the category is not present in an order and 1 or a count when the category is present in the order. \\
+\begin{multicols}{2}
+\begin{itemize}
+	\item Taxi Cab Data for January 2016
+	\item 1.3 Million Rows of Training Data Reduced to 921,000 Rows
+	\item 21 Days of Training Data and 5 Days of Testing Data
+\end{itemize}
 
-We have 1.3 million rows in our training data consisting of ride hailing orders. When we took into consideration, only those orders where the start and end districts have data for traffic and places of interest, the number of training rows were reduced to 921,000.
+\columnbreak
+
+Some of the Data Elements Included:
+\begin{itemize}
+	\item Hashed Start and Destination District
+	\item Time of Pickup
+	\item Points of Interest
+	\item Weather
+	\item Traffic
+\end{itemize} \\
+Categorical values were converted into a regression friendly format.
+\end{multicols}
 }
 
 %----------------------------------------------------------------------------------------
 %	Regression Results
 %----------------------------------------------------------------------------------------
 
-\headerbox{Regression Results}{name=results2, column=0, span=2, below=method,bottomaligned=conclusion}{ % This block's bottom aligns with the bottom of the conclusion block
+\headerbox{Regression Results}{name=results2, column=0, span=2, below=method}{ % This block's bottom aligns with the bottom of the conclusion block
 
 \begin{center}
     \begin{tabular}{|l|r|}
