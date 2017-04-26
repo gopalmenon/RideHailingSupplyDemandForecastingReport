@@ -73,7 +73,7 @@ linewidth=2pt % Width of the border lines around content boxes
 %
 {\includegraphics[height=4em]{u_logo.png}} % First university/lab logo on the left
 {\bf\textsc{Ride Hailing Supply and Demand Forecasting using Didi-Tech Dataset}\vspace{0.5em}} % Poster title
-{\textsc{\{ Gopal Menon and Kimberly Williamson \} \hspace{12pt} University of Utah Data Mining Spring 2017}} % Author names and institution
+{\textsc{\{ Gopal Menon and Kimberly Williamson \} \hspace{12pt} University of Utah, Data Mining, Spring 2017}} % Author names and institution
 
 %----------------------------------------------------------------------------------------
 %	Introduction
@@ -81,14 +81,38 @@ linewidth=2pt % Width of the border lines around content boxes
 
 \headerbox{Introduction}{name=objectives,column=0,span=2,row=0}{
 
-Didi Chuxing is the leading ride hailing company in China and processes over 11 million trips, plans over 9 billion routes and collects over 50TB of data per day. They organized a worldwide algorithm challenge in the year 2016 \cite{DidiPage} for forecasting ride supply and demand. We used the 2016 Didi algorithm competition dataset to try and forecast taxi trip supply and demand for any given date, time, and location using regression models covered in the Data Mining 2017 Spring semester at the School of Computing of the University of Utah.  Below is a sample of some methods used:
-
+Didi Chuxing 
+\begin{multicols}{2}
 \begin{enumerate}\compresslist
-\item Linear Regression using Stochastic Gradient Descent
-\item Polynomial Regression
-\item Gaussian Kernel Regression
-\item Hierarchial Clustering
+\item Leading ride hailing company in China
+\item Processes over 11 million trips
+\item Plans over 9 billion routes
+\item Collects over 50TB of data per day
+\item Organized algorithm challenge in 2016 \cite{DidiPage}
+\begin{itemize}\compresslist
+\item for forecasting ride supply and demand
+\item we used the Didi algorithm dataset
+\item to forecast taxi trip supply \& demand
+\end{itemize}
 \end{enumerate}
+\end{multicols}
+Below are the regression methods used:
+
+\begin{multicols}{2}
+\begin{enumerate}\compresslist
+\item Stochastic Gradient Descent
+\item Gaussian Kernel Ridge 
+\item Gaussian Kernel 
+\item Hierarchical Clustering\\
+\item Using top 10 eigen vectors
+\begin{enumerate}\compresslist
+\item Polynomial degrees $2$, $3$ and $4$
+\item Gradient Boosted 
+\item Ridge
+\item Lasso
+\end{enumerate}
+\end{enumerate}
+\end{multicols}
 
 \vspace{0.3em} % When there are two boxes, some whitespace may need to be added if the one on the right has more content
 }
@@ -101,29 +125,33 @@ Didi Chuxing is the leading ride hailing company in China and processes over 11 
 
 \begin{multicols*}{2}
 \begin{center}
-\includegraphics[width=0.8\linewidth]{figures/NumberofRidesforDistrictandTimeSlot.png}
+\includegraphics[width=1.0\linewidth]{figures/NumberofRidesforDistrictandTimeSlot.png}
 \captionof{figure}{Number of rides scatter plot for start district and time slot.}
 \end{center}
 
 \textbf{Commercial vs Residential}
-\begin{itemize}
+\begin{itemize}\compresslist
 	\item Commercial - Districts where Didi Chuxing Customers Work
 	\item Residential - Districts where Didi Chuxing Customers Live
 	\item Peak Timeslots and Districts were Visible
 	\item Pattern Not Strong Enough to Reduce Complexity
 \end{itemize}
+\begin{center}
+\includegraphics[width=0.7\linewidth]{figures/StartMorning.png}
+\captionof{figure}{Morning peak orders}
+\end{center}
 \columnbreak
 %------------------------------------------------
 \textbf{Outliers}
 \begin{itemize}
 	\item Boxplot
-	\begin{itemize}
+	\begin{itemize}\compresslist
 		\item Computed with Inter-Quartile Distance Between the First and Third Quartiles
 		\item Included Elements that are up to $1.5$ Times the Inter-Quartile distance
 		\item Outliers Removed had Little Effect
 	\end{itemize}
 	\item Clustering
-	\begin{itemize}
+	\begin{itemize}\compresslist
 		\item Agglomerative Clustering
 		\item Sparsed Data did not Create Well-Formed Clusters
 		\item Unable to Remove Outliers
@@ -162,6 +190,7 @@ Didi Chuxing is the leading ride hailing company in China and processes over 11 
 %----------------------------------------------------------------------------------------
 
 \headerbox{Conclusion}{name=conclusion,column=2,span=2,row=0,below=results,above=bottom}{
+
 \begin{itemize}
 	\item Traditional Regression Methods Do Not Work for Complicated Situations with Human Behavior
 	\item Deep Learning Techniques Would be Better Fit to Handle this Project
@@ -176,7 +205,7 @@ Didi Chuxing is the leading ride hailing company in China and processes over 11 
 \headerbox{Ride Hailing Data}{name=method,column=0,span=2,below=objectives}{ % This block's bottom aligns with the bottom of the conclusion block
 
 \begin{multicols}{2}
-\begin{itemize}
+\begin{itemize}\compresslist
 	\item Taxi Cab Data for January 2016
 	\item 1.3 Million Rows of Training Data Reduced to 921,000 Rows
 	\item 21 Days of Training Data and 5 Days of Testing Data
@@ -185,15 +214,13 @@ Didi Chuxing is the leading ride hailing company in China and processes over 11 
 \columnbreak
 
 Some of the Data Elements Included:
-\begin{itemize}
+\begin{itemize}\compresslist
 	\item Hashed Start and Destination District
 	\item Time of Pickup
-	\item Points of Interest
-	\item Weather
-	\item Traffic
-\end{itemize} \\
-Categorical values were converted into a regression friendly format.
+	\item Points of Interest, Weather, Traffic
+\end{itemize} 
 \end{multicols}
+Categorical values were converted into a regression friendly format.
 }
 
 %----------------------------------------------------------------------------------------
